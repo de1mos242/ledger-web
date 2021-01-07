@@ -1,11 +1,12 @@
 import Link from "next/link";
 import {useEffect, useState} from "react";
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 function Categories() {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        (async function() {
+        (async function () {
             const res = await fetch("/api/recorder/categories")
             setCategories(await res.json())
         })()
@@ -13,18 +14,29 @@ function Categories() {
 
     return (
         <div>
+            <h1>Categories</h1>
+            <TableContainer component={Paper}>
+                <Table size={"small"}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {categories.map((row) => (
+                            <TableRow key={row.id}>
+                                <TableCell>
+                                    {row.name}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <p>
+                <Link href="/categories/new"><Button variant="contained" color="primary">Add new</Button></Link>
+            </p>
 
-            <main>
-                <h1>Categories</h1>
-                <ul>
-                    {categories.map((v) => {
-                        return (<li key={v.id}>{v.name}</li>)
-                    })}
-                </ul>
-                <p>
-                    Create <Link href="/categories/new"><a>new</a></Link>
-                </p>
-            </main>
         </div>
     )
 }

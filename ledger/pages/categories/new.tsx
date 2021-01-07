@@ -1,6 +1,7 @@
 import {useRouter} from "next/router";
 import {useState} from "react";
 import {v4 as uuidv4} from 'uuid';
+import {Button, TextField} from "@material-ui/core";
 
 const preventDefault = f => e => {
     e.preventDefault()
@@ -29,7 +30,9 @@ export default function NewCategory() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input
+                <TextField
+                    id="standard-basic"
+                    label="Name"
                     type="text"
                     name='name'
                     value={name}
@@ -37,7 +40,7 @@ export default function NewCategory() {
                     placeholder='Name'
                     aria-label='Name'
                 />
-                <input type="submit"/>
+                <Button variant="contained" color="primary" type="submit">Create</Button>
             </form>
         </div>
     )
