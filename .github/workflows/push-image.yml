@@ -26,7 +26,7 @@ jobs:
       run: echo "$DOCKER_TOKEN" | docker login --username de1m0s --password-stdin
 
     - name: tag image
-      run: docker tag de1m0s/ledger-recorder de1m0s/ledger-web:${{ env.RELEASE_VERSION }}
+      run: docker tag de1m0s/ledger-web de1m0s/ledger-web:${{ env.RELEASE_VERSION }}
 
     - name: Publish image to dockerhub
       run: docker push de1m0s/ledger-web
