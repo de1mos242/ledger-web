@@ -1,23 +1,19 @@
-FROM node:current-alpine AS base
-WORKDIR /base
-COPY ledger/package*.json ./
-RUN npm install
-COPY ledger .
+FROM node:14 AS BuildImage
 
-FROM base AS build
-ENV NODE_ENV=production
-WORKDIR /build
-COPY --from=base /base ./
-RUN npm install sharp
+WORKDIR /app
+COPY ledger/package.json ledger/package-lock.json /app/
+RUN npm install
+
+COPY ledger/next.config.js ledger/next-env.d.ts ledger/tsconfig.json /app/
+COPY ledger /app/src
 RUN npm run build
 
-FROM node:current-alpine AS production
-ENV NODE_ENV=production
-WORKDIR /app
-COPY --from=build /build/package*.json ./
-COPY --from=build /build/.next ./.next
-COPY --from=build /build/public ./public
-RUN npm install next
+FROM node:14
+COPY --from=BuildImage /app/package.json package.json
+COPY --from=BuildImage /app/package-lock.json package-lock.json
+COPY --from=BuildImage /app/.next .next
+
+RUN npm install --only=prod
 
 EXPOSE 3000
 CMD npm run start
