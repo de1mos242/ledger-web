@@ -1,13 +1,15 @@
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {makeRequest} from "../services/http_service";
 
 function Categories() {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
         (async function () {
-            const res = await fetch("/api/recorder/categories")
+            let url = "/api/recorder/categories";
+            const res = await makeRequest(url)
             setCategories(await res.json())
         })()
     }, [])

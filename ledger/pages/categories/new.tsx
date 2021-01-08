@@ -2,6 +2,7 @@ import {useRouter} from "next/router";
 import {useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 import {Button, TextField} from "@material-ui/core";
+import {makeRequest} from "../../services/http_service";
 
 const preventDefault = f => e => {
     e.preventDefault()
@@ -15,7 +16,7 @@ export default function NewCategory() {
 
     const handleParam = setValue => e => setValue(e.target.value)
     const handleSubmit = preventDefault(async () => {
-        await fetch(`/api/recorder/categories/${id}`, {
+        await makeRequest(`/api/recorder/categories/${id}`, {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
