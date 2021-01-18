@@ -36,6 +36,7 @@ function Categories() {
                 </Table>
             </TableContainer>
             <p>
+                <Link href="/"><Button variant="contained" color="secondary">Back to main</Button></Link>
                 <Link href="/categories/new"><Button variant="contained" color="primary">Add new</Button></Link>
             </p>
 
