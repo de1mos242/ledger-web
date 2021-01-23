@@ -1,7 +1,13 @@
+import React from 'react';
 import 'fontsource-roboto';
+import AppToolBar from "../components/toolbar";
+import {wrapper} from "../store";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const WrappedApp = ({Component, pageProps}) => (
+    <div>
+        <AppToolBar/>
+        <Component {...pageProps} />
+    </div>
+)
 
-export default MyApp
+export default wrapper.withRedux(WrappedApp)
